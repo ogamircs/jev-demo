@@ -1,0 +1,8 @@
+[
+  { "id": "speed", "quote": "193.6x Faster, 444.6x Cheaper. *based on workflows for System One tasks", "sourceUrl": "https://typesafe.ai/", "retrievedAt": "2026-09-19",
+    "conditions": "The vendor compares against frontier LLM workflows. We compare against a small OpenAI model at its lowest reasoning effort, in one structured call." },
+  { "id": "fanout", "quote": "All questions are evaluated in parallel, so adding more questions to a call typically doesn't add any latency to the response.", "sourceUrl": "https://docs.typesafe.ai/patterns/fan-out", "retrievedAt": "2026-09-19",
+    "conditions": "We measured 1, 3, 6 and 12 questions on one ticket." },
+  { "id": "price", "quote": "Price (per Btok / per Mtok): $42 / $0.042", "sourceUrl": "https://docs.typesafe.ai/models", "retrievedAt": "2026-09-19",
+    "conditions": "Prices are list prices, not measurements. Token counts are measured. Jev counts more input tokens than OpenAI for the same request." }
+]

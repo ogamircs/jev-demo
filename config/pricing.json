@@ -1,0 +1,11 @@
+{
+  "note": "List prices in USD per 1M tokens. These are published prices, not measurements.",
+  "retrievedAt": "2026-09-19",
+  "entries": {
+    "jev-latest":   { "inputPerM": 0.042, "cachedInputPerM": 0.042, "outputPerM": 0, "source": "https://docs.typesafe.ai/models" },
+    "gpt-5.4-nano": { "inputPerM": 0.20,  "cachedInputPerM": 0.02,  "outputPerM": 1.25, "source": "https://developers.openai.com/api/docs/pricing" },
+    "gpt-4.1-nano": { "inputPerM": 0.10,  "cachedInputPerM": 0.025, "outputPerM": 0.40, "source": "https://developers.openai.com/api/docs/pricing" },
+    "gpt-5.6-luna": { "inputPerM": 0.20,  "cachedInputPerM": 0.02,  "outputPerM": 1.20, "source": "https://developers.openai.com/api/docs/pricing" },
+    "gpt-6-astra":  { "inputPerM": 10.00, "cachedInputPerM": 1.00,  "outputPerM": 50.00, "source": "https://developers.openai.com/api/docs/pricing" }
+  }
+}

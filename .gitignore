@@ -1,0 +1,11 @@
+# secrets
+.env
+.env.*
+!.env.example
+
+# local outputs
+recordings/probe*.json
+recordings/*.raw.json
+node_modules/
+.DS_Store
+.playwright-mcp/

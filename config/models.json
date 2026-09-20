@@ -1,0 +1,10 @@
+{
+  "note": "OpenAI lanes in preference order. IDs are intersected with GET /v1/models at startup; missing ones are dropped. The first available 'fast' entry is the headline lane.",
+  "jev": { "id": "jev", "model": "jev-latest", "label": "Jev" },
+  "openai": [
+    { "id": "openai_fast",     "model": "gpt-5.4-nano", "tier": "fast",     "label": "OpenAI small",    "why": "Current-generation smallest tier at its lowest reasoning effort. Headline lane." },
+    { "id": "openai_fastest",  "model": "gpt-4.1-nano", "tier": "fast",     "label": "OpenAI fastest",  "why": "Older non-reasoning model. It was the fastest OpenAI option in our probe." },
+    { "id": "openai_luna",     "model": "gpt-5.6-luna", "tier": "fast",     "label": "OpenAI newest small", "why": "Newest small tier." },
+    { "id": "openai_frontier", "model": "gpt-6-astra",  "tier": "frontier", "label": "OpenAI frontier", "why": "Frontier model at its lowest allowed effort. Optional; never the headline." }
+  ]
+}

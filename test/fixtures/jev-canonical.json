@@ -1,0 +1,38 @@
+{
+  "model": "jev-1.13.0",
+  "answers": {
+    "department": {
+      "type": "choice",
+      "choice": "billing",
+      "confidence": 0.97,
+      "probabilities": {
+        "sales": 0,
+        "billing": 0.98,
+        "technical": 0.02
+      }
+    },
+    "frustration": {
+      "type": "score",
+      "score": 1.14,
+      "confidence": 0.79,
+      "legend": {
+        "0": "Calm and neutral.",
+        "1": "Concerned but civil.",
+        "2": "Very angry or using strong language."
+      },
+      "probabilities": {
+        "0": 0,
+        "1": 0.86,
+        "2": 0.14
+      }
+    },
+    "refund_requested": {
+      "type": "noul",
+      "noul": 0.98
+    }
+  },
+  "usage": {
+    "input_tokens": 432,
+    "output_tokens": 71
+  }
+}

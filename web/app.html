@@ -1,0 +1,126 @@
+<title>How Jev Decides</title>
+<div class="page" id="top">
+  <header class="mast">
+    <p class="eyebrow">An independent demo. Every timing, token count and answer here was measured.</p>
+    <h1>How Jev decides</h1>
+    <p class="lede">Jev is a model that never writes text. You give it some <em>state</em> and a set of typed questions. It gives back typed answers, each with a probability. This page puts it to work on one support desk, and gives an OpenAI model the same job, so you can see what differs.</p>
+    <div class="provenance" id="provenance" aria-live="polite"><span class="badge" id="mode-badge">Loading</span><span id="provenance-text">Getting things ready.</span></div>
+  </header>
+
+  <section class="act" id="act-anatomy" aria-labelledby="h-anatomy">
+    <div class="act-head">
+      <h2 id="h-anatomy">What goes in, what comes out</h2>
+      <p>A ticket arrives at Ledgerly, a made-up invoicing service. The software needs three things from it: which team should take it, how upset the customer is, and whether they want money back. Each question declares its type, so the answer can only be a value you allowed.</p>
+    </div>
+    <div class="bench">
+      <div class="bench-in">
+        <div class="field-row">
+          <label for="anatomy-ticket">Ticket</label>
+          <select id="anatomy-ticket"></select>
+          <button class="btn" id="anatomy-run" type="button">Ask Jev</button>
+        </div>
+        <div class="ticket" id="anatomy-state" tabindex="0" aria-label="Ticket text"></div>
+        <div class="freetext" id="anatomy-free" hidden>
+          <label for="anatomy-free-text">Or write your own ticket</label>
+          <textarea id="anatomy-free-text" rows="3" placeholder="Type any customer message, then press Ask Jev."></textarea>
+        </div>
+        <h3 class="sub">The questions</h3>
+        <div class="questions" id="anatomy-questions"></div>
+      </div>
+      <div class="bench-out">
+        <h3 class="sub">The answers <span class="meta" id="anatomy-meta"></span></h3>
+        <div class="answers" id="anatomy-answers"></div>
+      </div>
+    </div>
+    <details class="raw"><summary>See the raw request and response</summary>
+      <div class="raw-grid"><div><h4>Request body</h4><pre class="json" id="anatomy-raw-req" tabindex="0"></pre></div><div><h4>Response body</h4><pre class="json" id="anatomy-raw-res" tabindex="0"></pre></div></div>
+    </details>
+  </section>
+
+  <section class="act" id="act-race" aria-labelledby="h-race">
+    <div class="act-head">
+      <h2 id="h-race">Same job, two engines</h2>
+      <p>Same ticket, same three questions, same wording. Jev answers in one pass. The OpenAI model gets one call with a strict JSON schema at its lowest reasoning effort, which was the fastest fair setup we could find.</p>
+    </div>
+    <div class="controls">
+      <div class="field"><label for="race-ticket">Ticket</label><select id="race-ticket"></select></div>
+      <fieldset class="field lanes-pick"><legend>OpenAI models to include</legend><div id="race-lanes"></div></fieldset>
+      <div class="field"><label for="race-speed">Playback</label><select id="race-speed"><option value="1">Real time</option><option value="0.2">5&times; slower</option></select></div>
+      <button class="btn btn-primary" id="race-run" type="button">Run the race</button>
+    </div>
+    <div class="race" id="race-track" role="group" aria-label="Latency race"></div>
+    <ul class="chips" id="race-chips" aria-label="Fairness conditions"></ul>
+    <div class="race-results">
+      <div><h3 class="sub">Did they agree?</h3><div class="table-wrap"><table class="tbl" id="race-answers"></table></div></div>
+      <div><h3 class="sub">Tokens and cost</h3><div class="table-wrap"><table class="tbl" id="race-cost"></table></div><p class="note" id="race-cost-note"></p></div>
+    </div>
+    <div class="samples-block">
+      <h3 class="sub">Every sample, not just one <button class="btn btn-small" id="race-more" type="button" hidden>Run 5 more</button></h3>
+      <div id="race-samples"></div>
+    </div>
+    <details class="raw"><summary>How we kept this fair</summary><ul class="method" id="race-fair"></ul></details>
+  </section>
+
+  <section class="act" id="act-fanout" aria-labelledby="h-fanout">
+    <div class="act-head">
+      <h2 id="h-fanout">More questions, same wait?</h2>
+      <p>TypeSafe says the questions in one call are answered in parallel, so asking more should not take longer. We asked 1, 3, 6 and 12 questions about one ticket. For OpenAI we tried it two ways: everything in one call, and one call per question fired at the same moment.</p>
+    </div>
+    <div class="controls"><button class="btn" id="fanout-run" type="button" hidden>Run this live (about 90 calls)</button><span class="meta" id="fanout-status"></span></div>
+    <div class="chart-card">
+      <div class="legend" id="fanout-legend"></div>
+      <p class="meta">Lines join the medians. Faint dots are single samples. A triangle at the top edge is a sample above the axis, labelled with its time.</p>
+      <div class="chart" id="fanout-chart"></div>
+      <details class="raw"><summary>Show as a table, with cost</summary><div class="table-wrap"><table class="tbl" id="fanout-table"></table></div></details>
+    </div>
+    <p class="takeaway" id="fanout-takeaway"></p>
+  </section>
+
+  <section class="act" id="act-gating" aria-labelledby="h-gating">
+    <div class="act-head">
+      <h2 id="h-gating">Knowing when it doesn't know</h2>
+      <p>A label tells your code what to do. A confidence number tells it whether to act. Jev reports confidence from the spread of its probabilities. The OpenAI model was asked to write a confidence number next to its answer. Move the thresholds and watch 14 tickets fall into three piles.</p>
+    </div>
+    <p class="banner" id="gating-banner">14 tickets, written and labelled before any run. This illustrates the idea. It is not a calibration study.</p>
+    <div class="controls"><button class="btn" id="gating-run" type="button" hidden>Run this live (28 calls)</button><span class="meta" id="gating-status"></span></div>
+    <div class="gates" id="gating-strips"></div>
+    <div class="key" id="gating-key"></div>
+    <details class="raw" open><summary>All 14 tickets</summary><div class="table-wrap"><table class="tbl" id="gating-table"></table></div></details>
+  </section>
+
+  <section class="act" id="act-limits" aria-labelledby="h-limits">
+    <div class="act-head">
+      <h2 id="h-limits">When not to use Jev</h2>
+      <p>TypeSafe lists counting, date arithmetic and sums as things Jev is unreliable at, and says to do them in code. We asked anyway, and gave the OpenAI model the same questions. The right answer in each case comes from a line of code.</p>
+    </div>
+    <div class="controls"><button class="btn" id="limits-run" type="button" hidden>Run this live (6 calls)</button><span class="meta" id="limits-status"></span></div>
+    <div class="limit-cards" id="limits-cards"></div>
+    <p class="takeaway" id="limits-takeaway"></p>
+
+    <h3 class="sub wide">How the two fit together</h3>
+    <p class="prose">Jev cannot write a reply, plan a fix, or add up charges. The pattern TypeSafe recommends keeps code in charge: Jev makes the quick typed calls, code does the arithmetic and the branching, and a language model is called only when words are needed.</p>
+    <div class="flow" id="hybrid-flow" role="img" aria-label="A ticket goes to Jev for typed decisions. Code then branches. High confidence routes automatically. Low confidence goes to a person. Tickets that need a written reply go to a language model.">
+      <div class="flow-node"><span class="flow-k">in</span>Ticket text</div>
+      <div class="flow-arrow" aria-hidden="true"></div>
+      <div class="flow-node flow-jev"><span class="flow-k">Jev</span>Typed decisions with probabilities</div>
+      <div class="flow-arrow" aria-hidden="true"></div>
+      <div class="flow-node"><span class="flow-k">your code</span>Thresholds, arithmetic, branching</div>
+      <div class="flow-arrow" aria-hidden="true"></div>
+      <div class="flow-split">
+        <div class="flow-node flow-out"><span class="flow-k">confident</span>Route or act</div>
+        <div class="flow-node flow-out"><span class="flow-k">unsure</span>Hand to a person</div>
+        <div class="flow-node flow-llm"><span class="flow-k">needs words</span>Language model writes the reply</div>
+      </div>
+    </div>
+
+    <h3 class="sub wide">Vendor claims next to our numbers</h3>
+    <div class="table-wrap"><table class="tbl claims" id="claims-table"></table></div>
+
+    <details class="raw"><summary>How this was measured</summary><ul class="method" id="method-list"></ul></details>
+  </section>
+
+  <footer class="foot">
+    <p>Independent demo. Not affiliated with or endorsed by TypeSafe AI or OpenAI. Ledgerly and its customers are fictional. Prices are published list prices. Everything else on this page was measured from one laptop on one network, so your numbers will differ.</p>
+  </footer>
+</div>
+<div class="tip" id="tip" role="tooltip" hidden></div>
